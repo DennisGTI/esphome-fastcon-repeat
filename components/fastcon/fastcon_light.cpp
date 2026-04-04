@@ -1,3 +1,11 @@
+#include "fastcon_light.h"
+#include "esphome/core/log.h"
+
+namespace esphome {
+namespace fastcon {
+
+static const char *const TAG = "fastcon.light";
+
 void FastconLight::write_state(light::LightState *state) {
   auto light_data = this->controller_->get_light_data(state);
 
@@ -5,14 +13,16 @@ void FastconLight::write_state(light::LightState *state) {
   float brightness = ((light_data[0] & 0x7F) / 127.0f) * 100.0f;
 
   if (light_data.size() == 1) {
-    ESP_LOGD(TAG, "Writing state: light_id=%d, on=%d, brightness=%.1f%%", light_id_, is_on, brightness);
+    ESP_LOGD(TAG, "Writing state: light_id=%d, on=%d, brightness=%.1f%%",
+             light_id_, is_on, brightness);
   } else {
     auto r = light_data[2];
     auto g = light_data[3];
     auto b = light_data[1];
     auto warm = light_data[4];
     auto cold = light_data[5];
-    ESP_LOGD(TAG, "Writing state: light_id=%d, on=%d, brightness=%.1f%%, rgb=(%d,%d,%d), warm=%d, cold=%d",
+    ESP_LOGD(TAG,
+             "Writing state: light_id=%d, on=%d, brightness=%.1f%%, rgb=(%d,%d,%d), warm=%d, cold=%d",
              light_id_, is_on, brightness, r, g, b, warm, cold);
   }
 
@@ -25,3 +35,6 @@ void FastconLight::write_state(light::LightState *state) {
     this->controller_->queueCommand(this->light_id_, adv_data);
   }
 }
+
+}  // namespace fastcon
+}  // namespace esphome
