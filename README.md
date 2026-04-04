@@ -51,7 +51,8 @@ light:
   - platform: fastcon
     id: living_room_light
     name: "Living Room Light"
-    light_id: 1           # ID of the light (1-255)
+    light_id: 1                    # ID of the light (1-255)
+    default_transition_length: 0s  # Removes transision
 ```
 
 ### Configuration Variables
