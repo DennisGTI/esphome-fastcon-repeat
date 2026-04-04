@@ -32,7 +32,7 @@ esp32_ble_server:
 
 # Source configuration
 external_components:
-  - source: github://dennispg/esphome-fastcon@main
+  - source: github://hoogiesngrinderz/esphome-fastcon-repeat@main
 
 # Controller configuration
 fastcon:
@@ -44,6 +44,7 @@ fastcon:
   adv_duration: 50        # Advertisement duration in milliseconds
   adv_gap: 10             # Gap between advertisements in milliseconds
   max_queue_size: 100     # Maximum number of queued commands
+  repeat_count: 2         # Repeat cout if commands are being missed/dropped
 
 # Light configuration (add an entry for each light)
 light:
