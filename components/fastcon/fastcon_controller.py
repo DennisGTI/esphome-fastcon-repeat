@@ -11,12 +11,14 @@ CONF_ADV_INTERVAL_MAX = "adv_interval_max"
 CONF_ADV_DURATION = "adv_duration"
 CONF_ADV_GAP = "adv_gap"
 CONF_MAX_QUEUE_SIZE = "max_queue_size"
+CONF_REPEAT_COUNT = "repeat_count"
 
 DEFAULT_ADV_INTERVAL_MIN = 0x20
 DEFAULT_ADV_INTERVAL_MAX = 0x40
 DEFAULT_ADV_DURATION = 50
 DEFAULT_ADV_GAP = 10
 DEFAULT_MAX_QUEUE_SIZE = 100
+DEFAULT_REPEAT_COUNT = 2
 
 
 def validate_hex_bytes(value):
@@ -24,7 +26,6 @@ def validate_hex_bytes(value):
         value = value.replace(" ", "")
         if len(value) != 8:
             raise cv.Invalid("Mesh key must be exactly 4 bytes (8 hex characters)")
-
         try:
             return HexInt(int(value, 16))
         except ValueError as err:
@@ -37,21 +38,14 @@ FastconController = fastcon_ns.class_("FastconController", cg.Component)
 
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.Optional(CONF_ID, default="fastcon_controller"): cv.declare_id(
-            FastconController
-        ),
+        cv.Optional(CONF_ID, default="fastcon_controller"): cv.declare_id(FastconController),
         cv.Required(CONF_MESH_KEY): validate_hex_bytes,
-        cv.Optional(
-            CONF_ADV_INTERVAL_MIN, default=DEFAULT_ADV_INTERVAL_MIN
-        ): cv.uint16_t,
-        cv.Optional(
-            CONF_ADV_INTERVAL_MAX, default=DEFAULT_ADV_INTERVAL_MAX
-        ): cv.uint16_t,
+        cv.Optional(CONF_ADV_INTERVAL_MIN, default=DEFAULT_ADV_INTERVAL_MIN): cv.uint16_t,
+        cv.Optional(CONF_ADV_INTERVAL_MAX, default=DEFAULT_ADV_INTERVAL_MAX): cv.uint16_t,
         cv.Optional(CONF_ADV_DURATION, default=DEFAULT_ADV_DURATION): cv.uint16_t,
         cv.Optional(CONF_ADV_GAP, default=DEFAULT_ADV_GAP): cv.uint16_t,
-        cv.Optional(
-            CONF_MAX_QUEUE_SIZE, default=DEFAULT_MAX_QUEUE_SIZE
-        ): cv.positive_int,
+        cv.Optional(CONF_MAX_QUEUE_SIZE, default=DEFAULT_MAX_QUEUE_SIZE): cv.positive_int,
+        cv.Optional(CONF_REPEAT_COUNT, default=DEFAULT_REPEAT_COUNT): cv.int_range(min=1, max=10),
     }
 ).extend(cv.COMPONENT_SCHEMA)
 
@@ -76,3 +70,4 @@ async def to_code(config):
     cg.add(var.set_adv_duration(config[CONF_ADV_DURATION]))
     cg.add(var.set_adv_gap(config[CONF_ADV_GAP]))
     cg.add(var.set_max_queue_size(config[CONF_MAX_QUEUE_SIZE]))
+    cg.add(var.set_repeat_count(config[CONF_REPEAT_COUNT]))
