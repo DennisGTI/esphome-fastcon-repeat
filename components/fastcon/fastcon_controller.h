@@ -5,7 +5,8 @@
 #include <mutex>
 #include <vector>
 #include "esphome/core/component.h"
-#include "esphome/components/esp32_ble_server/ble_server.h"
+#include "esphome/components/esp32_ble/ble.h"
+#include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 
 namespace esphome
 {
