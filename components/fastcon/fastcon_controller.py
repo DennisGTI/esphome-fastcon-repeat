@@ -4,6 +4,7 @@ from esphome.const import CONF_ID
 from esphome.core import HexInt
 
 DEPENDENCIES = ["esp32_ble"]
+AUTO_LOAD = ["light"]
 
 CONF_MESH_KEY = "mesh_key"
 CONF_ADV_INTERVAL_MIN = "adv_interval_min"

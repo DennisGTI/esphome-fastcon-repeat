@@ -4,6 +4,8 @@
 #include <vector>
 #include "esphome/core/component.h"
 #include "esphome/components/light/light_output.h"
+#include "esphome/components/light/light_state.h"
+#include "esphome/components/light/light_traits.h"
 #include "fastcon_controller.h"
 
 namespace esphome
