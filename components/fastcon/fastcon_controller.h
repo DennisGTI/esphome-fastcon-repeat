@@ -8,6 +8,7 @@
 #include "esphome/components/esp32_ble/ble.h"
 #include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 #include "esphome/components/light/light_state.h"
+#include "esphome/components/light/light_traits.h"
 
 namespace esphome
 {
