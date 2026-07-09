@@ -1,6 +1,5 @@
 #include "esphome/core/component_iterator.h"
 #include "esphome/core/log.h"
-#include "esphome/components/light/color_mode.h"
 #include "fastcon_controller.h"
 #include "protocol.h"
 
